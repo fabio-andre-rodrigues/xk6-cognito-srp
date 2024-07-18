@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	cognitosrp "github.com/alexrudd/cognito-srp/v4.1.0"
+	cognitosrp "github.com/alexrudd/cognito-srp/v4"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	cip "github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider"
@@ -39,19 +39,18 @@ type AuthOptionalParams struct {
 	cognitoSecret  *string
 }
 
-func contains(array []string, element string) bool {
-	fmt.Printf("Inside contains")
-	for _, item := range array {
-		if item == element {
-			return true
-		}
-	}
-	return false
-}
+// func contains(array []string, element string) bool {
+// 	for _, item := range array {
+// 		if item == element {
+// 			return true
+// 		}
+// 	}
+// 	return false
+// }
 
 func (r *Cognito) Connect(region string) (*Client, error) {
 
-	fmt.Printf("Inside Connect", region)
+	fmt.Printf("Connecting to region %v\n", region)
 
 	regionAws := config.WithRegion(region)
 	//cred := config.WithCredentialsProvider(aws.AnonymousCredentials{})
@@ -129,7 +128,7 @@ func (c *Client) Auth(username, password, poolId, clientId string, params AuthOp
 
 	} else {
 		// other challenges await...
-		return nil, fmt.Errorf("Challenge %s is not supported", resp.ChallengeName)
+		return nil, fmt.Errorf("Challenge %v is not supported", resp.ChallengeName)
 	}
 
 }
