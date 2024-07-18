@@ -92,7 +92,7 @@ func (c *Client) Auth(username, password, poolId, clientId string, params AuthOp
 	})
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Failed to initialize Auth: %w", err)
 	}
 
 	// respond to password verifier challenge
